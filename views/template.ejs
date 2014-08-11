@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title><%= title %></title>
+    <script src="<%= to_root %>main.js"></script>
+    <link href="<%= to_root %>main.css" rel="stylesheet">
+</head>
+<body>
+<div id="root">
+    <h1><%= title %></h1>
+    <nav id="primary_navigation">
+        <% mainMenu(site.pages) %>
+    </nav>
+    <div id="content">
+        <% for (var i=0; i<page.resources.length; i++) { %>
+        <img src="<%= to_root %><%= page.resources[i].path %>"><br>
+        <% } %>
+    </div>
+</div>
+</body>
+</html>
+
+
+
+
+<% function mainMenu(pages) { %>
+<ul>
+<% for (var i=0; i<pages.length; i++) { var p = pages[i]; %>
+<li><a href="<%= to_root %><%= p.url %>.html"><%= p.title %></a></li>
+<% if (p.pages && p.pages.length !=0) { mainMenu(p.pages); } } %>
+</ul>
+<% } %>
