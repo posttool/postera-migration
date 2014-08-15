@@ -7,13 +7,28 @@
 </head>
 <body>
 <div id="root">
-    <h1><%= title %></h1>
+    <div id="title">
+    <h1><a href="<%= to_root %>index.html"><%= title %></a></h1>
+    </div>
     <nav id="primary_navigation">
         <% mainMenu(site.pages) %>
     </nav>
+
     <div id="content">
-        <% for (var i=0; i<page.resources.length; i++) { %>
-        <img src="<%= to_root %><%= page.resources[i].path %>"><br>
+        <%if (page.type == 'Portfolio') { %>
+        <% for (var i=0; i<page.resources.length; i++) { var r = page.resources[i]; if (r.type == 'image') { %>
+        <img src="<%= to_root %><%= r.path %>"><br>
+        <% } else { %>
+        <video width="100%" controls>
+          <source src="<%= to_root %><%= r.path %>" type="video/mp4">
+          <!--<source src="movie.ogg" type="video/ogg">-->
+          Your browser does not support the video tag.
+        </video>
+        <% } %>
+        <% if (r.description) { %><div><%- r.description %></div><% }%>
+        <% } %>
+        <% } else { %>
+        <%- page.body %>xx
         <% } %>
     </div>
 </div>
@@ -25,8 +40,11 @@
 
 <% function mainMenu(pages) { %>
 <ul>
-<% for (var i=0; i<pages.length; i++) { var p = pages[i]; %>
+<% for (var i=0; i<pages.length; i++) { var p = pages[i]; if (p == page) {%>
+<li><%= p.title %></li>
+<% } else { %>
 <li><a href="<%= to_root %><%= p.url %>.html"><%= p.title %></a></li>
+<% } %>
 <% if (p.pages && p.pages.length !=0) { mainMenu(p.pages); } } %>
 </ul>
 <% } %>

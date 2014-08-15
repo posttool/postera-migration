@@ -28,6 +28,8 @@ var utils = require("./utils");
 //  archive.finalize();
 //}
 
+
+
 function encoded_args(o) {
   return "args=" + encodeURIComponent(JSON.stringify(o));
 }
@@ -49,6 +51,14 @@ function http_get(url, args, complete) {
   });
 }
 
+function copy(files, dest, cb) {
+  utils.forEach(files, function(file, next){
+    utils.copyFile(__dirname + '/' + file, dest + '/' + path.basename(file), next);
+  }, function(){
+    cb();
+  });
+}
+
 
 var url1 = "http://postera.com/PosteraSystems/GetSiteByUserName/.json?";
 var url2 = "http://postera.com/PosteraTreeModule/FillSystemNode/.json?";
@@ -57,6 +67,7 @@ var resource_base_url = "http://postera.s3.amazonaws.com/";
 
 generate_site(process.argv[2], function(err){
   if (err) throw err;
+  console.log("OK")
 });
 
 function generate_site(user_name, complete) {
@@ -71,10 +82,12 @@ function generate_site(user_name, complete) {
     templateString = data.toString();
     //rmdir(site_path, function (err) {
     //  if (err) return complete(err);
-      mkdirp(site_path, function (err) {
+    mkdirp(site_path, function (err) {
+      copy(['public/template/main.css', 'public/template/main.js'], site_path, function (err) {
         if (err) return complete(err);
         get_site(user_name);
-      });
+      })
+    });
     //});
   });
 
@@ -87,6 +100,7 @@ function generate_site(user_name, complete) {
       http_get(url2, [id], function (err, response) {
         process_node(response.value, function (s) {
           site = s;
+          site.url = 'index';
           utils.forEach(pages, function (page, next) {
             var c = 0;
             for (var i=0; i<page.url.length; i++)
@@ -94,12 +108,18 @@ function generate_site(user_name, complete) {
             var to_root = '';
             for (var i=0; i<c; i++)
               to_root += '../';
-            var html_page = ejs.render(templateString, {page: page, site: site, title: '', to_root: to_root});
-            mkdirp(path.dirname(site_path + '/' + page.url), function (err) {
+            var html_page = ejs.render(templateString, {
+              page: page,
+              site: site,
+              title: page == site ? site.title : site.title + ' &gt; ' + page.title,
+              to_root: to_root
+            });
+            var url = page.url;
+            mkdirp(path.dirname(site_path + '/' + url), function (err) {
               if (err) return complete(err);
-              fs.writeFile(site_path + '/' + page.url + '.html', html_page, function (err) {
+              fs.writeFile(site_path + '/' + url + '.html', html_page, function (err) {
                 if (err) return complete(err);
-                console.log("The file was saved!", site_path + page.url);
+                console.log("The file was saved!", site_path + '/' + page.url);
                 return next();
               });
             });
@@ -111,26 +131,44 @@ function generate_site(user_name, complete) {
     });
   }
 
+  var strip_regex = /(<([^>]+)>)/ig;
 
+  function empty(s) {
+    if (s == null)
+      return true;
+    var ss = s.replace(strip_regex, '');
+    if (ss == '')
+      return true;
+    else
+      return false;
+  }
 
   function process_node(node, next) {
-    var descr = node.attributes.data.attributes.description;
-    if (descr == '<ROOT><DIV class="column0"><ROOT/></DIV></ROOT>')
+    var dattr = node.attributes.data.attributes;
+    var descr = !empty(dattr.description) ? dattr.description :
+        !empty(dattr.summary) ? dattr.summary :
+        !empty(dattr.overview) ? dattr.overview : '' ;
+    if (empty(descr) && dattr.sections != null && dattr.sections.length != 0) {
+      descr = JSON.stringify(dattr.sections);
+    }
+    if (empty(descr))
       descr = '';
     var page = {
-      title: node.attributes.data.attributes.title,
-      body: descr,
+      type: node.attributes.node_class,
       url: node.attributes.node_id,
+      title: dattr.title,
+      body: descr,
       pages: [],
       resources: []
     };
-    utils.forEach(node.attributes.data.attributes.images, function (o, n) {
-      //console.log(o.attributes.description);
-      //console.log(o.attributes.resource.attributes.title);
-      //console.log(o.attributes.resource.attributes['path-token']);
+    utils.forEach(dattr.images, function (o, n) {
       create_resource(o.attributes.resource.attributes, function (r) {
-        if (r)
-          page.resources.push({path: r, description: o.attributes.description});
+        if (r){
+          var rdescr = o.attributes.description;
+          var ext = path.extname(r);
+          var rtype = ext == '.flv' ? 'video' : 'image';
+          page.resources.push({path: r, description: rdescr, type: rtype});
+        }
         return n();
       });
     }, function () {
