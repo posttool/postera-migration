@@ -1,0 +1,35 @@
+<% var title = "Postera Data Liberation" %>
+<% include head.ejs %>
+
+<h3 class="spaced">Postera Site Downloader</h3>
+
+<div class="spaced">This site will generate a static version of your Postera site. The static version is something that
+could be customized with css or javascript, but is not inherently very sophisticated. It is primarily
+meant to serve as an archive of the content from your site. All images and videos will be included at their
+original quality. </div>
+
+<div class="spaced">
+<input type="text" placeholder="http://" id="domain" />
+<div id="domain_error"></div>
+</div>
+
+<div class="spaced">
+<button id="generate">Generate ZIP</button>
+</div>
+
+<div class="spaced" id="info">
+
+</div>
+
+
+<% include foot.ejs %>
+
+
+
+
+
+
+
+
+
+

@@ -1,6 +1,8 @@
 var cluster = require('cluster');
 var mongoose = require('mongoose');
 var express = require('express');
+var config = require('./config');
+var migrate = require('./migrate')({});
 
 var data = {};
 
@@ -18,16 +20,17 @@ if (cluster.isMaster) {
   });
 
   server.get('/', function (req, res) {
-    res.render('volume.ejs', {});
+    res.render('index.ejs', {});
   });
 
-  server.get('/download/:username', function (req, res) {
-    if (data[req.params.username]) {
-      var s = data[req.params.username];
-
-    }
+  server.get('/generate/:url', function (req, res) {
+      var url = req.params.url;
+      migrate.generate(url);
+      res.json(migrate.info(url));
   });
 
+  console.log('server on '+config.serverPort);
+  server.listen(config.serverPort);
 
 
 }
