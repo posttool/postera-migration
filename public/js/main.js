@@ -19,10 +19,14 @@ $(document).ready(function () {
       intid = setInterval(function () {
         $.ajax('/generate/' + encodeURIComponent(domain)).done(function (r) {
           if (r.state == "error") {
-            alert("ERRO"+r);
-            console.log(r);
             clearInterval(intid);
             intid = -1;
+            $("#generating-msg").hide();
+            $("#progress-wrap").hide();
+            $("#info").addClass("error");
+            alert(r.error+"\n\nTry again?");
+            location.href = "/?"+Math.random();
+            return;
           }
           if (r.state == "complete") {
             clearInterval(intid);

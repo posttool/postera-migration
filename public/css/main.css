@@ -224,3 +224,9 @@ input:focus {
     font-size: .9em;
     color: #999;
 }
+
+#info.error {
+    color: #880000;
+    font-size: 1.5em;
+    font-weight: bold;
+}

@@ -31,20 +31,27 @@ exports = module.exports = function (lock) {
   };
 
 
+  function clean_url(url) {
+    var u = url;
+    if (u.indexOf("http://") == 0)
+      u = u.substring(7);
+    if (u.indexOf("www.") == 0)
+      u = u.substring(4);
+    return u;
+  }
   function get_info(url) {
-    return lock[url.substring(7)];
+    return lock[clean_url(url)];
   }
 
   function get_site_info(url) {
-    return get_siteid_and_type(url.substring(7));
+    return get_siteid_and_type(clean_url(url));
   }
   function get_zippath(url) {
     return tmp + get_site_info(url).siteid + '.zip';
   }
 
   function generate_site(url, force, finished) {
-
-    url = url.substring(7);
+    url = clean_url(url);
     if (lock[url]) {
       return;
     }
@@ -52,7 +59,8 @@ exports = module.exports = function (lock) {
     var complete = function (err) {
       if (err) {
         lock[url].state = "error";
-        lock[url].error = err;
+        lock[url].messages.push(err.message);
+        lock[url].error = err.message;
       }
       else {
         lock[url].state = "complete";
