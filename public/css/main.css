@@ -1,266 +1,226 @@
-/*! HTML5 Boilerplate v4.3.0 | MIT License | http://h5bp.com/ */
-
-/*
- * What follows is the result of much research on cross-browser styling.
- * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
- * Kroc Camen, and the H5BP dev community and team.
- */
-
-/* ==========================================================================
-   Base styles: opinionated defaults
-   ========================================================================== */
-
-html {
-    color: #222;
-    font-size: 1em;
-    line-height: 1.4;
+body {
+	color: #111;
+	font: 1em 'Akzidenz-GroteskBQRegular', sans;
+    margin: 100px 100px 20px 20px;
 }
 
-/*
- * Remove text-shadow in selection highlight: h5bp.com/i
- * These selection rule sets have to be separate.
- * Customize the background color to match your design.
- */
+
+@font-face {
+    font-family: 'Akzidenz-GroteskBQRegular';
+    src: url('../font/akzidenzgrotesk-regular-webfont.eot');
+    src: url('../font/akzidenzgrotesk-regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../font/akzidenzgrotesk-regular-webfont.woff') format('woff'),
+         url('../font/akzidenzgrotesk-regular-webfont.ttf') format('truetype'),
+         url('../font/akzidenzgrotesk-regular-webfont.svg#Akzidenz-GroteskBQRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+
+a {
+	color: #525252;
+	text-decoration: none;
+	background-color: #aedff6;
+}
+
+a:hover,a:focus {
+	background-color: #63cff2;
+}
+
+a:active,a:visited {
+	
+}
+
+/* ** ** Header Styles ** ** */
+h1,h2,h3,h4,h5 {
+	margin: 0.3em 0 0 0;
+	line-height: 1.1em;
+	font-weight: normal;
+}
+
+h1 {
+	font-size: 2.52em;
+}
+
+h2 {
+	font-size: 1.952em;
+}
+
+h3 {
+	font-size: 4em;
+}
+
+h4 {
+	font-size: 1.452em;
+}
+
+h5 {
+	font-size: 1.252em;
+}
+
+h6 {
+	font-size: 1.52em;
+}
+
+/* ** ** ul li's ** ** */
+ul {
+	list-style: none;
+}
+
+ul,ol {
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+}
+
+li ul,li ol {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+/* ** ** custom select color ** ** */
+::selection {
+	background: #f0f0f0; /* Safari */
+}
 
 ::-moz-selection {
-    background: #b3d4fc;
-    text-shadow: none;
+	background: #f0f0f0; /* Firefox */
+	color: #f0f0f0;
 }
 
-::selection {
-    background: #b3d4fc;
-    text-shadow: none;
+/* ** ** paragraph styling ** ** */
+p {
+	margin: 0 0 .12em;
 }
 
-/*
- * A better looking default horizontal rule
- */
-
-hr {
-    display: block;
-    height: 1px;
-    border: 0;
-    border-top: 1px solid #ccc;
-    margin: 1em 0;
-    padding: 0;
+strong {
+	font-weight: 600;
 }
 
-/*
- * Remove the gap between images, videos, audio and canvas and the bottom of
- * their containers: h5bp.com/i/440
- */
-
-audio,
-canvas,
-img,
-svg,
-video {
-    vertical-align: middle;
+em,dfn {
+	font-style: italic;
 }
 
-/*
- * Remove default fieldset styles.
- */
-
-fieldset {
-    border: 0;
-    margin: 0;
-    padding: 0;
+dfn {
+	font-weight: 600;
 }
 
-/*
- * Allow only vertical resizing of textareas.
- */
-
-textarea {
-    resize: vertical;
+sup,sub {
+	line-height: 0;
 }
 
-/* ==========================================================================
-   Browse Happy prompt
-   ========================================================================== */
-
-.browsehappy {
-    margin: 0.2em 0;
-    background: #ccc;
-    color: #000;
-    padding: 0.2em 0;
+abbr,acronym {
+	border-bottom: 1px dashed #ccc;
 }
 
-/* ==========================================================================
-   Author's custom styles
-   ========================================================================== */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* ==========================================================================
-   Helper classes
-   ========================================================================== */
-
-/*
- * Hide visually and from screen readers: h5bp.com/u
- */
-
-.hidden {
-    display: none !important;
-    visibility: hidden;
+address {
+	margin: 0 0 1.5em;
+	font-style: italic;
 }
 
-/*
- * Hide only visually, but have it available for screen readers: h5bp.com/v
- */
-
-.visuallyhidden {
-    border: 0;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
+del {
+	color: #666;
 }
 
-/*
- * Extends the .visuallyhidden class to allow the element to be focusable
- * when navigated to via the keyboard: h5bp.com/p
- */
-
-.visuallyhidden.focusable:active,
-.visuallyhidden.focusable:focus {
-    clip: auto;
-    height: auto;
-    margin: 0;
-    overflow: visible;
-    position: static;
-    width: auto;
+pre,code,tt {
+	font: 1em 'andale mono', 'lucida console', monospace;
+	line-height: 1.5;
+	display: block;
 }
 
-/*
- * Hide visually and from screen readers, but maintain layout
- */
-
-.invisible {
-    visibility: hidden;
+code {
+	background-color: #eee;
+	display: inline;
+	padding: 0px 2px 1px 2px;
+	line-height: 1.1em;
 }
 
-/*
- * Clearfix: contain floats
- *
- * For modern browsers
- * 1. The space content is one way to avoid an Opera bug when the
- *    `contenteditable` attribute is included anywhere else in the document.
- *    Otherwise it causes space to appear at the top and bottom of elements
- *    that receive the `clearfix` class.
- * 2. The use of `table` rather than `block` is only necessary if using
- *    `:before` to contain the top-margins of child elements.
- */
-
-.clearfix:before,
-.clearfix:after {
-    content: " "; /* 1 */
-    display: table; /* 2 */
+pre {
+	margin: 1.5em 0;
+	white-space: pre;
 }
 
-.clearfix:after {
-    clear: both;
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* forms*/
+button {
+	border: 0;
+	cursor: pointer;
+	color: #fff;
+	font-family: 'Akzidenz-GroteskBQRegular', sans;
+	font-size: .8em;
+	letter-spacing: .15em;
+	text-transform: uppercase;
+	padding: 9px 20px 7px 20px;
+	background-color: #009dd5;
+	margin: 0;
+	-webkit-border-radius: 2;
+	-moz-border-radius: 2;
+	border-radius: 2;
+	-webkit-appearance: none;
 }
 
-/* ==========================================================================
-   EXAMPLE Media Queries for Responsive Design.
-   These examples override the primary ('mobile first') styles.
-   Modify as content requires.
-   ========================================================================== */
-
-@media only screen and (min-width: 35em) {
-    /* Style adjustments for viewports that meet the condition */
+button:hover {
+	color: black;
+	background-color: #00bcff;
+}
+input {
+	-moz-border-radius: 0;
+	border-radius: 0;
+}
+input,select {
+	-webkit-appearance: none;
+	border: 1px #ccc solid;
+	font-family: 'Akzidenz-GroteskBQRegular', sans;
+	font-size: 3em;
+	padding: 7px;
+    width: 90%;
 }
 
-@media print,
-       (-o-min-device-pixel-ratio: 5/4),
-       (-webkit-min-device-pixel-ratio: 1.25),
-       (min-resolution: 120dpi) {
-    /* Style adjustments for high resolution devices */
+input[type='password'] {
+	letter-spacing: .2em;
 }
 
-/* ==========================================================================
-   Print styles.
-   Inlined to avoid the additional HTTP request: h5bp.com/r
-   ========================================================================== */
+input:focus {
+	outline: 5px auto #999;
+}
 
-@media print {
-    * {
-        background: transparent !important;
-        color: #000 !important; /* Black prints faster: h5bp.com/s */
-        box-shadow: none !important;
-        text-shadow: none !important;
-    }
 
-    a,
-    a:visited {
-        text-decoration: underline;
-    }
 
-    a[href]:after {
-        content: " (" attr(href) ")";
-    }
+.spaced {
+    margin: 0 0 30px 0;
+    max-width: 1000px;
+}
 
-    abbr[title]:after {
-        content: " (" attr(title) ")";
-    }
+.progress {
+    width: 100%;
+    height: 35px;
+    background-color: #eee;
+}
+.progress-meter {
+    width: 1%;
+    height: 100%;
+    background-color: #00b3e9;
+}
 
-    /*
-     * Don't show links that are fragment identifiers,
-     * or use the `javascript:` pseudo protocol
-     */
 
-    a[href^="#"]:after,
-    a[href^="javascript:"]:after {
-        content: "";
-    }
+#generating, #complete {
+    display: none;
+}
 
-    pre,
-    blockquote {
-        border: 1px solid #999;
-        page-break-inside: avoid;
-    }
-
-    thead {
-        display: table-header-group; /* h5bp.com/t */
-    }
-
-    tr,
-    img {
-        page-break-inside: avoid;
-    }
-
-    img {
-        max-width: 100% !important;
-    }
-
-    p,
-    h2,
-    h3 {
-        orphans: 3;
-        widows: 3;
-    }
-
-    h2,
-    h3 {
-        page-break-after: avoid;
-    }
+#info {
+    font-size: .9em;
+    color: #999;
 }

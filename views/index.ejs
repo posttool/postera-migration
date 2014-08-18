@@ -1,26 +1,53 @@
-<% var title = "Postera Data Liberation" %>
+<% var title = "Postera Data Liberator" %>
 <% include head.ejs %>
 
-<h3 class="spaced">Postera Site Downloader</h3>
+<div id="main">
+    <h3 class="spaced">Postera Download</h3>
 
-<div class="spaced">This site will generate a static version of your Postera site. The static version is something that
-could be customized with css or javascript, but is not inherently very sophisticated. It is primarily
-meant to serve as an archive of the content from your site. All images and videos will be included at their
-original quality. </div>
+    <div id="begin">
+        <div class="spaced">This site will generate and archive a static version of your Postera site. The static version is
+            something that could be customized with CSS or Javascript, but it is not necessaraily meant for that purpose.
+            It is primarily meant to serve as an archive of the content from your site. All images and videos will be
+            included at their original quality.
+        </div>
 
-<div class="spaced">
-<input type="text" placeholder="http://" id="domain" />
-<div id="domain_error"></div>
+        <div class="spaced">
+            Enter the URL of your Postera site in the field below.
+        </div>
+
+        <div class="spaced">
+            <input type="text" placeholder="http://" id="domain"/>
+
+            <div id="domain_error"></div>
+        </div>
+
+        <div class="spaced">
+            <button id="generate">Generate ZIP</button>
+        </div>
+    </div>
+
+    <div id="generating">
+        <div class="spaced">
+            Generating ZIP for <span id="domain-display">http://postera.com/dk</span>.
+        </div>
+
+        <div class="spaced">
+            <div class="progress">
+                <div class="progress-meter" id="progress-meter"></div>
+            </div>
+        </div>
+
+        <div class="spaced" id="info">
+
+        </div>
+    </div>
+
+    <div id="complete">
+        <div class="spaced">
+            <strong>Archive ready!</strong> Download here <a href="/download/dk" id="zip-url">/download/dk</a>.
+        </div>
+    </div>
 </div>
-
-<div class="spaced">
-<button id="generate">Generate ZIP</button>
-</div>
-
-<div class="spaced" id="info">
-
-</div>
-
 
 <% include foot.ejs %>
 

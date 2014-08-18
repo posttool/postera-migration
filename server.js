@@ -24,9 +24,14 @@ if (cluster.isMaster) {
   });
 
   server.get('/generate/:url', function (req, res) {
-      var url = req.params.url;
-      migrate.generate(url);
-      res.json(migrate.info(url));
+    var url = req.params.url;
+    migrate.generate(url);
+    res.json(migrate.info(url));
+  });
+
+  server.get('/download/:url', function (req, res) {
+    var url = req.params.url;
+    res.download(migrate.zippath(url), migrate.siteinfo(url).siteid + '.zip');
   });
 
   console.log('server on '+config.serverPort);
