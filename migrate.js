@@ -287,11 +287,14 @@ exports = module.exports = function (lock) {
   }
 
   function get_siteid_and_type(url) {
+    var siteid, idtype;
     if (url.indexOf("postera.com") == 0) {
       if (url.indexOf("/user/") == 11) {
         var id = url.substring(17);
+        if (id.indexOf(".html") == id.length - 5)
+          id = id.substring(0, id.length - 5);
         console.log('id', id);
-        siteid = id;
+        siteid = Number(id);
         idtype = 'UserId';
       } else {
         var username = url.substring(12);

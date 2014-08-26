@@ -37,5 +37,4 @@ if (cluster.isMaster) {
   console.log('server on '+config.serverPort);
   server.listen(config.serverPort);
 
-
 }
